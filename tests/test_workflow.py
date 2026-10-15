@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import main as app
+from agents import frontend
 from crew.workflow import ROLES, STEPS, build_tasks
 
 
@@ -20,6 +21,16 @@ FEATURE = {
 
 
 class WorkflowTests(unittest.TestCase):
+    def test_frontend_task_preserves_approved_scope_and_output_contract(self):
+        task = frontend.build_task(FEATURE)
+
+        self.assertIs(task.agent, frontend.agent)
+        self.assertIn("exclusivamente la funcionalidad frontend aprobada", task.description)
+        self.assertIn("No amplíes el scope", task.description)
+        self.assertIn("no inventes endpoints, campos ni reglas", task.description)
+        self.assertIn("no afirmes que ejecutaste pruebas, lint o build", task.description)
+        self.assertIn(".ts, .html o .css", task.expected_output)
+
     def test_each_role_builds_its_own_task(self):
         tasks = build_tasks(FEATURE)
         self.assertEqual(

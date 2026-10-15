@@ -24,6 +24,15 @@ Cada participante edita el archivo de su rol:
 - `agents/security.py`
 - `agents/chapter.py`
 
+La documentación detallada de cada agente está junto a su módulo Python:
+
+- [Arquitecto](agents/architect.md)
+- [Desarrollador backend](agents/backend.md)
+- [Desarrollador frontend](agents/frontend.md)
+- [Ingeniero de pruebas](agents/testing.md)
+- [Revisor de seguridad](agents/security.md)
+- [Chapter](agents/chapter.md)
+
 El orden es `architect → backend → frontend → testing → security → chapter`.
 Chapter reemplaza al LT como revisor final. La aprobación humana se conserva entre etapas.
 Consulta [TEAM.md](TEAM.md) para crear el repo de tu equipo y repartir los archivos.
