@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import main as app
+from agents import chapter
 from crew.workflow import ROLES, STEPS, build_tasks
 
 
@@ -20,6 +21,24 @@ FEATURE = {
 
 
 class WorkflowTests(unittest.TestCase):
+    def test_chapter_requires_markdown_code_and_disallows_delegation(self):
+        task = chapter.build_task(FEATURE)
+
+        self.assertEqual(
+            task.expected_output,
+            "Código en bloques markdown; primera línea con // Nombre.java y package pe.bcp.login.service.",
+        )
+        self.assertEqual(chapter.agent.role, "Chapter")
+        self.assertEqual(chapter.agent.goal, "Completar la tarea asignada.")
+        self.assertEqual(chapter.agent.backstory, "Eres un integrante del equipo.")
+        self.assertIs(chapter.agent.llm, chapter.llm)
+        self.assertTrue(chapter.agent.verbose)
+        self.assertFalse(chapter.agent.allow_delegation)
+        self.assertIn(FEATURE["title"], task.description)
+        self.assertIn(FEATURE["description"], task.description)
+        for criterion in FEATURE["acceptance_criteria"]:
+            self.assertIn(criterion, task.description)
+
     def test_each_role_builds_its_own_task(self):
         tasks = build_tasks(FEATURE)
         self.assertEqual(

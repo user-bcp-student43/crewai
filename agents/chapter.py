@@ -17,4 +17,5 @@ def build_task(feature: dict) -> Task:
     return Task(description=INSTRUCTIONS + "\nFeature: " + str(feature.get("title", ""))
                 + "\n" + str(feature.get("description", ""))
                 + "\n" + str(feature.get("acceptance_criteria", [])),
-                expected_output='Un informe con VEREDICTO: APROBADO o RECHAZADO.', agent=agent)
+                expected_output="Código en bloques markdown; primera línea con // Nombre.java y package pe.bcp.login.service.",
+                agent=agent)
